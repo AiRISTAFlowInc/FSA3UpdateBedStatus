@@ -1,0 +1,41 @@
+{
+  "name": "Airista Update Bed Status",
+  "type": "flogo:activity",
+  "version": "0.0.1",
+  "title": "A2: Update Bed Status",
+  "description": "Returns status of the update",
+  "homepage": "https://github.com/AiRISTAFlowInc/FlowActivities/tree/main/GetAllUsers",
+  "input": [
+    {
+      "name": "IP",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "CustomerId",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "Username",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "MAC",
+      "type": "string",
+      "required": true
+    }
+  ],
+  "output": [
+    {
+      "name": "Status",
+      "type": "boolean"
+    }
+  ]
+}
