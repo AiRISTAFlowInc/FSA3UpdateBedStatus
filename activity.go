@@ -40,8 +40,8 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	output := &Output{Status: updateStatus}
 
-	fmt.Println("Output: ", output.Status)
-	ctx.Logger().Info("Output: ", output)
+	// fmt.Println("Output: ", output.Status)
+	// ctx.Logger().Info("Output: ", output)
 
 	err = ctx.SetOutputObject(output)
 	if err != nil {
@@ -167,7 +167,7 @@ func changeItemAssociation(IP string, customerId string, uname string, pword str
 	// Create an HTTP client
 	client := &http.Client{}
 	// Create the request
-	url := "/api/Staff/ChangeItemAssociation?CustomerId="+customerId+"&AssociationType="+associationType+"&ItemID="+itemId+"&AssociatedItemID="+assocItemId
+	url := "http://" + IP + "/XpertRestApi/api/Staff/ChangeItemAssociation?CustomerId="+customerId+"&AssociationType="+associationType+"&ItemID="+itemId+"&AssociatedItemID="+assocItemId
 	req, err := http.NewRequest("POST", url, nil)
 	if err != nil {
 		fmt.Println("Error creating request:", err)
@@ -211,7 +211,7 @@ func endItemAssociation(IP string, customerId string, uname string, pword string
 	// Create an HTTP client
 	client := &http.Client{}
 	// Create the request
-	url := "/api/Staff/EndItemAssociation?CustomerId="+customerId+"&ItemID="+itemId+"&AssociatedItemID="+assocItemId
+	url := "http://" + IP + "/XpertRestApi/api/Staff/EndItemAssociation?CustomerId="+customerId+"&ItemID="+itemId+"&AssociatedItemID="+assocItemId
 	req, err := http.NewRequest("POST", url, nil)
 	if err != nil {
 		fmt.Println("Error creating request:", err)
@@ -255,7 +255,7 @@ func createItemAssociation(IP string, customerId string, uname string, pword str
 	// Create an HTTP client
 	client := &http.Client{}
 	// Create the request
-	url := "/api/Staff/CreateItemAssociation?CustomerId="+customerId+"&AssociationType="+associationType+"&ItemID="+itemId+"&AssociatedItemID="+assocItemId
+	url := "http://" + IP + "/XpertRestApi/api/Staff/CreateItemAssociation?CustomerId="+customerId+"&AssociationType="+associationType+"&ItemID="+itemId+"&AssociatedItemID="+assocItemId
 	req, err := http.NewRequest("POST", url, nil)
 	if err != nil {
 		fmt.Println("Error creating request:", err)

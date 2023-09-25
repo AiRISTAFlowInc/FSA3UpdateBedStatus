@@ -20,7 +20,8 @@ func TestEval(t *testing.T) {
 
 	act := &Activity{}
 	tc := test.NewActivityContext(act.Metadata())
-	input := &Input{IP: "52.45.17.177:802", CustomerId: "1", Username: "afadmin", Password: "admin", MAC: "AB:CE:AF:12:00:11"}
+	input := &Input{IP: "3.212.201.170:802", CustomerId: "2047", Username: "afadmin", Password: "admin", MAC: "00:01:11:12:51:9A"}
+	// requires a bed to be setup and have an associated device. Use its MAC here
 	err := tc.SetInputObject(input)
 	assert.Nil(t, err)
 
