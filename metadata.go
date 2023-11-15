@@ -42,17 +42,21 @@ func (i *Input) ToMap() map[string]interface{} {
 
 type Output struct {
 	Status bool `md:"Status"`
+	BedStatus string `md:"BedStatus"`
 }
 
 func (o *Output) FromMap(values map[string]interface{}) error {
 	boolStatus, _ := coerce.ToBool(values["Status"])
 	o.Status = boolStatus
+	bedStatus, _ := coerce.ToString(values["BedStatus"])
+	o.BedStatus = bedStatus
 	return nil
 }
 
 func (o *Output) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"Status": o.Status,
+		"BedStatus":o.BedStatus,
 	}
 }
 

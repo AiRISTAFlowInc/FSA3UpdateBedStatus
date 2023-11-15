@@ -36,9 +36,9 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	updateStatus := UpdateBedStatus(input.IP, input.CustomerId, input.Username, input.Password, input.MAC)
+	updateStatus, bedStatus := UpdateBedStatus(input.IP, input.CustomerId, input.Username, input.Password, input.MAC)
 
-	output := &Output{Status: updateStatus}
+	output := &Output{Status: updateStatus, BedStatus: bedStatus}
 
 	// fmt.Println("Output: ", output.Status)
 	// ctx.Logger().Info("Output: ", output)
@@ -51,11 +51,11 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	return true, nil
 }
 
-func UpdateBedStatus(IP string, customerId string, uname string, pword string, MAC string) bool {
+func UpdateBedStatus(IP string, customerId string, uname string, pword string, MAC string) (bool, string) {
 	itemID := GetByMACAddress(IP, customerId, uname, pword, MAC)
 	staff := GetByStaffId(IP, customerId, uname, pword, itemID)
-	status := nextBedStatus(IP, customerId, uname, pword, itemID, staff)
-	return status
+	status, bedStatus := nextBedStatus(IP, customerId, uname, pword, itemID, staff)
+	return status, bedStatus
 }
 
 func GetByMACAddress(IP string, customerId string, uname string, pword string, MAC string) string {
@@ -146,21 +146,25 @@ func GetByStaffId(IP string, customerId string, uname string, pword string, staf
 	return staff
 }
 
-func nextBedStatus(IP string, customerId string, uname string, pword string, staffId string, staff Staff) bool {
+func nextBedStatus(IP string, customerId string, uname string, pword string, staffId string, staff Staff) (bool, string) {
 	assocItemId := strconv.Itoa(staff.AssocItemID)
 	status:= false
+	bedStatus := "ERROR"
 
 	switch bedStatus := staff.BedStatus; bedStatus{
 	case "ASSIGNED":
 		status = changeItemAssociation(IP, customerId, uname, pword, staffId, assocItemId, "DISCHARGING")
+		bedStatus = "DISCHARGING"
 	case "DISCHARGING":
 		endItemAssociation(IP, customerId, uname, pword, staffId, assocItemId)
 		status = createItemAssociation(IP, customerId, uname, pword, staffId, assocItemId, "CLEANING")
+		bedStatus = "CLEANING"
 	case "CLEANING":
 		status = endItemAssociation(IP, customerId, uname, pword, staffId, assocItemId)
+		bedStatus = "AVAILABLE"
 	}
 	
-	return status
+	return status, bedStatus
 }
 
 func changeItemAssociation(IP string, customerId string, uname string, pword string, itemId string, assocItemId string, associationType string) bool{

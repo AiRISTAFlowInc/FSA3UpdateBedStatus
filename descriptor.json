@@ -2,9 +2,9 @@
   "name": "Airista Update Bed Status",
   "type": "flogo:activity",
   "version": "0.0.1",
-  "title": "A2: Update Bed Status",
+  "title": "A3: Update Bed Status",
   "description": "Returns status of the update",
-  "homepage": "https://github.com/AiRISTAFlowInc/FlowActivities/tree/main/GetAllUsers",
+  "homepage": "https://github.com/AiRISTAFlowInc/FSA3UpdateBedStatus",
   "input": [
     {
       "name": "IP",
@@ -36,6 +36,10 @@
     {
       "name": "Status",
       "type": "boolean"
+    },
+    {
+      "name": "BedStatus",
+      "type": "string"
     }
   ]
 }

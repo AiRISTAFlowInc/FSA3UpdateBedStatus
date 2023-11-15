@@ -1,4 +1,4 @@
-# UpdateBedStatus
+# A3UpdateBedStatus
 
 This activity updates a bed to Available.
 
@@ -7,7 +7,7 @@ What this activity is doing:
 1. Button press provides MAC
 2. api/Device/GetByMacAddress for ItemId
 3. api/Staff/GetByStaffId using ItemId for BedStatus
-4. Then update bed Status: ASSIGNED->DISCHARGING->CLEANING->AVAILABLE
+4. Then update bed Status: cd update
    - api/Staff/ChangeItemAssociation
    - api/Staff/EndItemAssociation
 
@@ -23,6 +23,7 @@ What this activity is doing:
 
 ### Output:
 
-| Name   | Type    | Description                      |
-| :----- | :------ | :------------------------------- |
-| Status | boolean | True if successful, false if not |
+| Name      | Type    | Description                      |
+| :-------- | :------ | :------------------------------- |
+| Status    | boolean | True if successful, false if not |
+| BedStatus | string  | Holds updated bed status         |
