@@ -41,7 +41,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	output := &Output{Status: updateStatus, BedStatus: bedStatus}
 
 	// fmt.Println("Output: ", output.Status)
-	 ctx.Logger().Info("Output: ", output)
+	// ctx.Logger().Info("Output: ", output)
 
 	err = ctx.SetOutputObject(output)
 	if err != nil {
@@ -153,20 +153,16 @@ func nextBedStatus(IP string, customerId string, uname string, pword string, sta
 
 	switch bedStatus := staff.BedStatus; bedStatus{
 	case "ASSIGNED":
-		println("assigned")
 		status = changeItemAssociation(IP, customerId, uname, pword, staffId, assocItemId, "DISCHARGING")
 		bedStatusOutput = "DISCHARGING"
 	case "DISCHARGING":
-		println("discharging")
 		endItemAssociation(IP, customerId, uname, pword, staffId, assocItemId)
 		status = createItemAssociation(IP, customerId, uname, pword, staffId, assocItemId, "CLEANING")
 		bedStatusOutput = "CLEANING"
 	case "CLEANING":
-		println("cleaning")
 		status = endItemAssociation(IP, customerId, uname, pword, staffId, assocItemId)
 		bedStatusOutput = "AVAILABLE"
 	}
-	println("stauts: ", bedStatusOutput)
 	
 	return status, bedStatusOutput
 }
