@@ -41,7 +41,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	output := &Output{Status: updateStatus, BedStatus: bedStatus}
 
 	// fmt.Println("Output: ", output.Status)
-	// ctx.Logger().Info("Output: ", output)
+	 ctx.Logger().Info("Output: ", output)
 
 	err = ctx.SetOutputObject(output)
 	if err != nil {
@@ -149,22 +149,26 @@ func GetByStaffId(IP string, customerId string, uname string, pword string, staf
 func nextBedStatus(IP string, customerId string, uname string, pword string, staffId string, staff Staff) (bool, string) {
 	assocItemId := strconv.Itoa(staff.AssocItemID)
 	status:= false
-	bedStatus := "ERROR"
+	bedStatusOutput := "ERROR"
 
 	switch bedStatus := staff.BedStatus; bedStatus{
 	case "ASSIGNED":
+		println("assigned")
 		status = changeItemAssociation(IP, customerId, uname, pword, staffId, assocItemId, "DISCHARGING")
-		bedStatus = "DISCHARGING"
+		bedStatusOutput = "DISCHARGING"
 	case "DISCHARGING":
+		println("discharging")
 		endItemAssociation(IP, customerId, uname, pword, staffId, assocItemId)
 		status = createItemAssociation(IP, customerId, uname, pword, staffId, assocItemId, "CLEANING")
-		bedStatus = "CLEANING"
+		bedStatusOutput = "CLEANING"
 	case "CLEANING":
+		println("cleaning")
 		status = endItemAssociation(IP, customerId, uname, pword, staffId, assocItemId)
-		bedStatus = "AVAILABLE"
+		bedStatusOutput = "AVAILABLE"
 	}
+	println("stauts: ", bedStatusOutput)
 	
-	return status, bedStatus
+	return status, bedStatusOutput
 }
 
 func changeItemAssociation(IP string, customerId string, uname string, pword string, itemId string, assocItemId string, associationType string) bool{
@@ -250,7 +254,7 @@ func endItemAssociation(IP string, customerId string, uname string, pword string
 	}
 	if(response.ErrorMessage == ""){// If successful return true 
 		return true
-	}
+	}else{println("EndItemAssociationError: ", response.ErrorMessage)}
 
 	return false
 }
